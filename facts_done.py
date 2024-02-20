@@ -9,7 +9,12 @@
 
 import os
 import shutil
-shutil.rmtree("spark-warehouse/learn_spark_db.db/facts")
+
+try:
+   shutil.rmtree("spark-warehouse/learn_spark_db.db/facts")
+   print("INFO: deleted existing learn_spark_db database, so it can be installed fresh.")
+except:
+    print("INFO: nothing deleted, because nothing has been created yet.")
  
 from pyspark.sql import SparkSession
 
@@ -17,7 +22,6 @@ spark = SparkSession.builder \
     .master("local") \
     .appName('learn_spark') \
     .getOrCreate()
-    #.config("spark.some.config.option", "some-value") \
 
 spark.sql("CREATE DATABASE learn_spark_db")
 spark.sql("USE learn_spark_db")
